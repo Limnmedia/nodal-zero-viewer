@@ -1,0 +1,165 @@
+<!doctype html>
+<html>
+  <head>
+    <title>Parallax Rig with Camera Switch</title>
+    <style>
+      body {
+        margin: 0;
+        overflow: hidden;
+      }
+
+      .ui-overlay {
+     
+        z-index: 999; /* VERY IMPORTANT: ensures it's above the canvas */
+        width: 100%;
+        height: 100%;
+        pointer-events: none; /* Let VR interactions pass through unless overridden */
+      }
+
+      .ui-overlay * {
+        pointer-events: auto; /* Allow user interaction inside overlay elements */
+        font-family: sans-serif;
+      }
+
+      .ui-control {
+        position: absolute;
+        z-index: 1000;
+        background: rgba(255, 255, 255, 0.8);
+        padding: 4px;
+        border-radius: 4px;
+      }
+    </style>
+    <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
+    <script type="module" src="fov-module.js"></script>
+    <script type="module" src="rotation-controller.js"></script>
+    <script type="module" src="z-offset-controller.js"></script>
+    <script type="module" src="camera-switcher.js"></script>
+    <script type="module" src="send-to-home.js"></script>
+    <script type="module" src="send-to-zero.js"></script>
+    <script type="module" src="slider-readout.js"></script>
+  </head>
+  <body>
+    <!-- Fixed Header -->
+<div id="headerBar"
+     style="position: fixed; top: 0; left: 0; width: 100%; padding: 10px 20px;
+            background: rgba(0, 0, 0, 0.7); color: white; font-family: sans-serif;
+            font-size: 1.2em; z-index: 100;">
+  Nodal Zero Viewer: Adjust Z Offset to pan without parallax.
+</div>
+    <a-scene reflection="directionalLight:a-light#dirlight">
+      <a-assets>
+        <a-asset-item id="cameraRigModel" src="camera-icon.glb"></a-asset-item>
+        <a-asset-item id="cameraSupportModel" src="camera-support.glb"></a-asset-item>
+        <img id="checker" src="grid_1in_20in.png" crossorigin="anonymous" />
+      </a-assets>
+
+     <a-light id="ambient" type="ambient" intensity=".15" color="#ffffff"> </a-light>
+      <a-light
+        type="directional"
+        light="castShadow:true;"
+        position="1 1 1"
+        intensity=".85"
+        shadow-camera-automatic="#objects"></a-light>
+
+      <!-- Rotator: spins the entire rig horizontally -->
+      <a-entity id="rotatorBase" rotation-controller="axis: y; inputId: panSlider" position="0 1.5 0">
+        <a-entity gltf-model="#cameraSupportModel" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+        <!-- Linear slider: moves camera along its Z axis (in and out from pivot) -->
+        <a-entity id="linearMover" z-offset-controller="inputId: zSlider; min: -2.2; max: .5" position="0 0 0">
+          <!-- Camera assembly at the end of the slider -->
+          <a-entity id="mainCameraRig" position="0 0 0">
+            <!-- GLB camera + rig model -->
+            <a-entity gltf-model="#cameraRigModel" position="0 0 0" scale="1 1 1" rotation="0 0 0"></a-entity>
+
+            <!-- Actual camera -->
+            <a-camera
+              id="mainCamera"
+              camera="active: true"
+              look-controls-enabled="false"
+              wasd-controls-enabled="false"
+              position="0 0 0"
+              fov="85">
+              <!-- UI Controls -->
+              <div class="ui-overlay" style="position: fixed; top: 60px; left: 20px; z-index: 100;">
+              
+                <!-- Pan Slider -->
+                <label
+                  for="panSlider"
+                  class="ui-control"
+                  style="position: absolute; top: 0px; left: 20px; z-index: 10; font-family: sans-serif">
+                  Pan Rotation (Y): <span id="panValue">0</span>°
+                </label>
+                <input
+                  class="ui-control"
+                  type="range"
+                  id="panSlider"
+                  min="-45"
+                  max="45"
+                  value="0"
+                  style="position: absolute; top: 20px; left: 20px; width: 300px; z-index: 10" />
+                <!-- Z-Offset Slider -->
+                <label
+                  for="zSlider"
+                  style="position: absolute; top: 60px; left: 20px; z-index: 10; font-family: sans-serif">
+                  Z Offset: <span id="zValue">0</span> mm
+                </label>
+                <input
+                  class="ui-control"
+                  type="range"
+                  id="zSlider"
+                  min="-2200"
+                  max="500"
+                  step="0.01"
+                  value="-2200"
+                  style="position: absolute; top: 80px; left: 20px; width: 300px; z-index: 10" />
+
+                <button
+                  id="switchCameraBtn"
+                  class="ui-control"
+                  style="position: absolute; top: 140px; left: 20px; z-index: 10">
+                  Switch to Witness Camera
+                </button>
+                <button id="homeBtn" class="ui-control" style="position: absolute; top: 180px; left: 20px; z-index: 10">
+                  Send to Standard Position
+                </button>
+
+                <button id="zeroBtn" class="ui-control" style="position: absolute; top: 220px; left: 20px; z-index: 10">
+                  Send to Nodal Zero (Calibrated)
+                </button>
+              </div>
+            </a-camera>
+
+            <!-- Visual AOV frame -->
+            <a-entity aov-frame position="0 0 -1" scale="1.78 1 1"></a-entity>
+          </a-entity>
+        </a-entity>
+      </a-entity>
+
+      <!-- Witness camera -->
+      <a-entity id="witnessRig" position="10 0 0" rotation="0 90 0">
+        <a-camera id="witnessCamera" camera="active: false"></a-camera>
+      </a-entity>
+
+      <!-- Scene objects -->
+      <a-cylinder position="0 1.75 -3.5" color="hsl(0, 71%, 33%)" radius="0.1" height=".23"></a-cylinder>
+      <a-cylinder position="0 1.25 -3.5" color="hsl(240, 98%, 25%)" radius="0.1" height=".23"></a-cylinder>
+      <a-cylinder position="0 1.5 -6" color="#ffff00" radius="0.1" height="3"></a-cylinder>
+
+      <!-- Environment -->
+      <a-plane
+        position="0 -2 0"
+        rotation="-90 90 0"
+        width="35.4"
+        height="20"
+        material="src: #checker; repeat: 1 1; transparent: false;"></a-plane>
+      <a-sky color="#c4c8ff"></a-sky>
+      <!-- Footer Widget -->
+
+      <div style="position: fixed; bottom: 10px; right: 10px; z-index: 100; font-family: sans-serif; font-size: 0.8em; color: #aaa;">
+   © LIMNMEDIA 2025 <br/> <strong>Nodal Zero Viewer</strong> is an educational tool by <a href="https://limnmedia.com" target="_blank">LIMNMEDIA</a>  
+  <br/>
+  Visualize parallax and camera Z-offset — because seeing is understanding.
+</div>
+    </a-scene>
+  </body>
+</html>
