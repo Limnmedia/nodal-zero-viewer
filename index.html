@@ -41,6 +41,7 @@
     <script type="module" src="send-to-home.js"></script>
     <script type="module" src="send-to-zero.js"></script>
     <script type="module" src="slider-readout.js"></script>
+    <script type="module" src="main.js"></script>
   </head>
   <body>
     <!-- Fixed Header -->
@@ -50,6 +51,51 @@
             font-size: 1.2em; z-index: 100;">
   Nodal Zero Viewer: Adjust Z Offset to pan without parallax.
 </div>
+
+    
+    <!-- Splash Screen / Landing Panel -->
+<section id="landing-info" style="font-family: sans-serif; max-width: 800px; margin: 2em auto; padding: 1.5em; background: #fefefe; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); position: absolute; top: 5%; left: 50%; transform: translateX(-50%); z-index: 999;">
+  <h1 style="margin-top: 0;">Nodal Point Calibration Trainer</h1>
+  <h2>Nodal Zero Viewer</h2>
+
+  <p><strong>This interactive tool teaches you how to spot and correct unwanted parallax in camera rigs.</strong></p>
+
+  <h2>What You See</h2>
+  <ul>
+    <li><strong>Red & Blue Cylinders:</strong> Foreground subjects are stacked one one the other, with a visible gap.</li>
+    <li><strong>Yellow Cylinder:</strong> Tall background reference, visible above, below, and through the gap.</li>
+    <li><strong>All objest are the same diameter, or width.</strong></li>
+  </ul>
+
+  <h2>How It Works</h2>
+  <ul>
+    <li>The scene starts with the camera mounted at the body — over the tripod pivot.</li>
+    <li><strong>Use the Pan slider</strong> to rotate the rig and notice how the foreground and background shift: <br />this is <strong>unwanted parallax</strong>.</li>
+    <li><strong>View in the Main camera</strong> to see the parallax change</li>
+    <li><strong>Adjust Z-Offset slider</strong> to find non-parallax position — this is the correct nodal alignment.</li>
+    <li><strong>Switch to the Witness Camera</strong> to see the rig from the side. In VR, walk around to inspect the geometry.</li>
+  </ul>
+
+  <h2>What You're Learning</h2>
+  <p>You're visually tuning your camera to behave like a CG camera — one that rotates around its 'nodal point' and introduces no parallax shift when panning.</p>
+  <p>Build or buy an offset arm or slider or other camera support to mechanically calibrate the nodal point.</p>
+
+  <h2>⚡ Tips</h2>
+  <ul>
+    <li><strong>Switch back</strong> to the main camera and test again: when aligned, the background stays fixed behind the gap.</li>
+    <li>Click <strong>“Send to Nodal Zero”</strong> to jump to the correct offset instantly.</li>
+    <li>Use sliders to experiment — and train your eye to see parallax.</li>
+  </ul>
+
+  <div style="margin-top: 2em; text-align: center;">
+    <button id="launchBtn"
+            style="font-size: 1.1em; padding: 0.75em 1.5em; background: #4CAF50; color: white; border: none; border-radius: 5px; cursor: pointer;">
+      ✅ Launch Calibration Tool
+    </button>
+  </div>
+</section>
+    
+    
     <a-scene reflection="directionalLight:a-light#dirlight">
       <a-assets>
         <a-asset-item id="cameraRigModel" src="camera-icon.glb"></a-asset-item>

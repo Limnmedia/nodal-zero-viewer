@@ -24,3 +24,10 @@ AFRAME.registerSystem('camera-switcher', {
     });
   }
 });
+
+  const launchBtn = document.getElementById('launchBtn');
+  const landingInfo = document.getElementById('landing-info');
+
+  launchBtn.addEventListener('click', () => {
+    landingInfo.style.display = 'none';
+  });
