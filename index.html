@@ -55,36 +55,41 @@
     
     <!-- Splash Screen / Landing Panel -->
 <section id="landing-info" style="font-family: sans-serif; max-width: 800px; margin: 2em auto; padding: 1.5em; background: #fefefe; border-radius: 10px; box-shadow: 0 2px 12px rgba(0,0,0,0.1); position: absolute; top: 5%; left: 50%; transform: translateX(-50%); z-index: 999;">
-  <h1 style="margin-top: 0;">Nodal Point Calibration Trainer</h1>
-  <h2>Nodal Zero Viewer</h2>
+  <h1 style="margin-top: 0;">Nodal Zero Viewer</h1>
+  <h2 style="margin-bottom: 0.5em;">Parallax Calibration Trainer</h2>
 
-  <p><strong>This interactive tool teaches you how to spot and correct unwanted parallax in camera rigs.</strong></p>
+  <p><strong>Parallax is the invisible enemy of seamless camera motion.</strong> This interactive tool helps you understand and eliminate unwanted parallax by aligning your camera’s rotation center with its optical nodal point—just like in CG cameras and professional VFX workflows.</p>
 
-  <h2>What You See</h2>
+  <h2>🧠 Why It Matters</h2>
+  <p>In photography and cinematography, especially for visual effects and stop-motion, the camera must rotate around its entrance pupil (nodal point) to avoid foreground/background shifting. Misalignment introduces parallax—subtle but disastrous when compositing elements across multiple passes or layers.</p>
+
+  <h2>🧱 What You’re Looking At</h2>
   <ul>
-    <li><strong>Red & Blue Cylinders:</strong> Foreground subjects are stacked one one the other, with a visible gap.</li>
-    <li><strong>Yellow Cylinder:</strong> Tall background reference, visible above, below, and through the gap.</li>
-    <li><strong>All objest are the same diameter, or width.</strong></li>
+    <li><strong>Red & Blue Cylinders:</strong> Foreground objects with a clear gap between them.</li>
+    <li><strong>Yellow Cylinder:</strong> A tall background reference visible between and around the gap.</li>
+    <li><strong>Purple Rig:</strong> Represents a typical tripod-mounted setup where the pan axis is aligned with the camera body, not the lens.</li>
   </ul>
 
-  <h2>How It Works</h2>
+  <h2>🎛️ How to Use This Tool</h2>
   <ul>
-    <li>The scene starts with the camera mounted at the body — over the tripod pivot.</li>
-    <li><strong>Use the Pan slider</strong> to rotate the rig and notice how the foreground and background shift: <br />this is <strong>unwanted parallax</strong>.</li>
-    <li><strong>View in the Main camera</strong> to see the parallax change</li>
-    <li><strong>Adjust Z-Offset slider</strong> to find non-parallax position — this is the correct nodal alignment.</li>
-    <li><strong>Switch to the Witness Camera</strong> to see the rig from the side. In VR, walk around to inspect the geometry.</li>
+    <li><strong>Start with the Main Camera view:</strong> This is your shot framing, aligned with the rig.</li>
+    <li><strong>Pan the camera</strong> using the slider — notice how the background shifts behind the foreground? That’s parallax.</li>
+    <li><strong>Adjust Z-Offset:</strong> Move the camera back so the lens aligns with the rotation axis.</li>
+    <li><strong>Switch to the Witness Camera:</strong> This side view shows how the camera sits on the rig. In VR mode, walk around to inspect from any angle.</li>
+    <li><strong>Click "Send to Nodal Zero":</strong> Automatically position the camera at the correct nodal alignment.</li>
   </ul>
 
-  <h2>What You're Learning</h2>
-  <p>You're visually tuning your camera to behave like a CG camera — one that rotates around its 'nodal point' and introduces no parallax shift when panning.</p>
-  <p>Build or buy an offset arm or slider or other camera support to mechanically calibrate the nodal point.</p>
+  <h2>🎥 Film History Context</h2>
+  <p>In traditional stop-motion, the camera was often locked off to avoid these problems. But as techniques evolved—especially in live-action VFX—the need to match camera movement across layers introduced tools like nodal rigs, sliders, and motion control cranes. CG cameras solve this digitally by default. This tool helps you do it physically.</p>
 
-  <h2>⚡ Tips</h2>
+  <h2>🛠️ What You’re Learning</h2>
+  <p>You’re calibrating your camera like a CG artist: rotating around the nodal point, eliminating parallax, and preserving true perspective. This is essential for practical compositing, stereo photography, and any situation where real-world optics must match virtual ones.</p>
+
+  <h2>⚡ Tips & Tricks</h2>
   <ul>
-    <li><strong>Switch back</strong> to the main camera and test again: when aligned, the background stays fixed behind the gap.</li>
-    <li>Click <strong>“Send to Nodal Zero”</strong> to jump to the correct offset instantly.</li>
-    <li>Use sliders to experiment — and train your eye to see parallax.</li>
+    <li><strong>Keep switching views:</strong> Witness Camera helps verify alignment; Main Camera shows the visual result.</li>
+    <li><strong>Use "Send to Home" to reset, and "Send to Nodal Zero" to calibrate.</strong></li>
+    <li><strong>Train your eye:</strong> Slight shifts in the yellow background cylinder indicate misalignment. Perfect stillness signals success.</li>
   </ul>
 
   <div style="margin-top: 2em; text-align: center;">
