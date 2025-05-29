@@ -3,14 +3,16 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-
+    <!-- Standard Meta -->
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nodal Zero Viewer — Parallax Calibration Tool by LIMNMEDIA</title>
     <meta
       name="description"
       content="Visualize and understand camera parallax caused by nodal point misalignment. An educational viewer for filmmakers, animators, and VFX artists." />
     <meta
       name="keywords"
-      content="parallax, nodal point, entrance pupil, z-offset, nodal, camera calibration, stop-motion, stop motion, stopmotion, animation, multiplane, photogrammetry, VR, VFX, LIMNMEDIA, cinematography, A-Frame" />
+      content="parallax, nodal point, entrance pupil, z-offset, nodal, camera calibration, stop-motion, stop motion, stopmotion, animation, multiplane, photogrammetry, VR, VFX, LIMNMEDIA, cinematography, aframe" />
     <meta name="author" content="LIMNMEDIA" />
 
     <!-- Open Graph (Facebook, LinkedIn) -->
@@ -20,7 +22,9 @@
       content="Learn how nodal misalignment causes parallax. This interactive visualization tool helps animators, filmmakers, and VFX artists spot and fix the problem." />
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://limnmedia.github.io/nodal-zero-viewer/" />
+    <!-- Adjust this to your actual URL -->
     <meta property="og:image" content="https://raw.githubusercontent.com/Limnmedia/nodal-zero-viewer/main/thumb.png" />
+    <!-- Replace with actual image path -->
 
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
@@ -29,9 +33,16 @@
       name="twitter:description"
       content="Visual tool to teach nodal point alignment for zero-parallax camera movement." />
     <meta name="twitter:image" content="https://raw.githubusercontent.com/Limnmedia/nodal-zero-viewer/main/twitter_banner.png" />
+    <!-- Replace with actual image path -->
 
+    <!-- Favicon (optional) -->
+    <link rel="icon" type="image/ico" href="favicon.ico" />
+    <title>Nodal Zero Viewer</title>
+    <meta
+      name="description"
+      content="An educational tool to visualize parallax and nodal point calibration in VR or browser." />
     <link rel="icon" href="data:," />
-
+    <!-- Prevents 404 favicon error -->
     <style>
       body {
         margin: 0;
@@ -39,14 +50,14 @@
       }
 
       .ui-overlay {
-        z-index: 999;
+        z-index: 999; /* VERY IMPORTANT: ensures it's above the canvas */
         width: 100%;
         height: 100%;
-        pointer-events: none;
+        pointer-events: none; /* Let VR interactions pass through unless overridden */
       }
 
       .ui-overlay * {
-        pointer-events: auto;
+        pointer-events: auto; /* Allow user interaction inside overlay elements */
         font-family: sans-serif;
       }
 
@@ -58,7 +69,6 @@
         border-radius: 4px;
       }
     </style>
-
     <script src="https://aframe.io/releases/1.4.2/aframe.min.js"></script>
     <script type="module" src="fov-module.js"></script>
     <script type="module" src="rotation-controller.js"></script>
@@ -69,42 +79,55 @@
     <script type="module" src="slider-readout.js"></script>
     <script type="module" src="main.js"></script>
   </head>
-
   <body>
-    <div id="headerBar" style="position: fixed; top: 0; left: 0; width: 100%; padding: 10px 20px; background: rgba(0, 0, 0, 0.7); color: white; font-family: sans-serif; font-size: 1.2em; z-index: 100;">
-      Nodal Zero Viewer: Adjust Z Offset to Pan without parallax.
+    <!-- Fixed Header -->
+    <div
+      id="headerBar"
+      style="
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        padding: 10px 20px;
+        background: rgba(0, 0, 0, 0.7);
+        color: white;
+        font-family: sans-serif;
+        font-size: 1.2em;
+        z-index: 100;
+      ">
+      Nodal Zero Viewer: Adjust Z Offset to pan without parallax.
     </div>
 
-<section id="landing-info"
-  style="
-    font-family: sans-serif;
-    max-width: 700px;
-    margin: 2em auto;
-    padding: 1.5em;
-    background: #fefefe;
-    border-radius: 10px;
-    box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
-    position: absolute;
-    top: 5%;
-    left: 50%;
-    transform: translateX(-50%);
-    z-index: 999;
-    max-height: 50vh;
-    overflow-y: auto;
-  ">
-  <h1 style="margin-top: 0">Nodal Zero Viewer</h1>
+    <!-- Splash Screen / Landing Panel -->
+    <section
+      id="landing-info"
+      style="
+        font-family: sans-serif;
+        max-width: 800px;
+        margin: 2em auto;
+        padding: 1.5em;
+        background: #fefefe;
+        border-radius: 10px;
+        box-shadow: 0 2px 12px rgba(0, 0, 0, 0.1);
+        position: absolute;
+        top: 5%;
+        left: 50%;
+        transform: translateX(-50%);
+        z-index: 999;
+      ">
+      <h1 style="margin-top: 0">Nodal Zero Viewer</h1>
       <h2 style="margin-bottom: 0.5em">Parallax Calibration Trainer</h2>
 
       <p>
-        This interactive tool helps you
+        <strong>Parallax is the invisible enemy of seamless camera motion.</strong> This interactive tool helps you
         understand and eliminate unwanted parallax by aligning your camera’s rotation center with its optical nodal
-        point — just like CG cameras do by default.
+        point—just like in CG cameras and professional VFX workflows.
       </p>
 
       <h2>Why It Matters</h2>
       <p>
-        In cinematography, especially for visual effects and stop-motion, the camera must rotate around
-        its entrance pupil (nodal point) to avoid foreground/background shifting. Misalignment introduces parallax —
+        In photography and cinematography, especially for visual effects and stop-motion, the camera must rotate around
+        its entrance pupil (nodal point) to avoid foreground/background shifting. Misalignment introduces parallax,
         subtle but disastrous when compositing elements across multiple passes or layers.
       </p>
 
@@ -112,54 +135,69 @@
       <ul>
         <li><strong>Red & Blue Cylinders:</strong> Foreground objects with a clear gap between them.</li>
         <li><strong>Yellow Cylinder:</strong> A tall background reference visible between and around the gap.</li>
-        <li><strong>Purple Rig:</strong> Represents a typical tripod-mounted setup where the pan axis is aligned with the camera body, not the lens.</li>
-        <li><strong>All objects are the same diameter</strong> — alignment errors become easier to spot.</li>
+        <li>
+          <strong>Purple Rig:</strong> Represents a typical tripod-mounted setup where the pan axis is aligned with the
+          camera body, not the lens.
+        </li>
       </ul>
 
       <h2>How to Use This Tool</h2>
       <ul>
         <li><strong>Start with the Main Camera view:</strong> This is your shot framing, aligned with the rig.</li>
-        <li><strong>Pan the camera</strong> using the slider — notice how the background shifts behind the foreground? That’s parallax.</li>
+        <li>
+          <strong>Pan the camera</strong> using the slider — notice how the background shifts behind the foreground?
+          That’s parallax.
+        </li>
         <li><strong>Adjust Z-Offset:</strong> Move the camera back so the lens aligns with the rotation axis.</li>
-        <li><strong>Switch to the Witness Camera:</strong> This side view shows how the camera sits on the rig. In VR mode, walk around to inspect from any angle.</li>
-        <li><strong>Click "Send to Nodal Zero":</strong> Automatically position the camera at the correct nodal alignment.</li>
+        <li>
+          <strong>Switch to the Witness Camera:</strong> This side view shows how the camera sits on the rig. In VR
+          mode, walk around to inspect from any angle.
+        </li>
+        <li>
+          <strong>Click "Send to Nodal Zero":</strong> Automatically position the camera at the correct nodal alignment.
+        </li>
       </ul>
 
       <h2>Film History Context</h2>
       <p>
-        Most cameras are mounted by the body — placing the tripod head (and pan axis) behind the lens.
-In stop-motion, this worked fine when cameras were locked off. But once dynamic shots and multi-pass compositing became necessary, this mounting introduced a problem: unwanted parallax.
-Live-action VFX solved it with nodal rigs and motion control. CG cameras do it automatically. This tool shows you how to do it physically — aligning the lens, not the body, to the pivot point.
+        In traditional stop-motion, the camera was often locked off to avoid these problems. But as techniques
+        evolved—especially in live-action VFX—the need to match camera movement across layers introduced tools like
+        nodal rigs, sliders, and motion control cranes. CG cameras solve this digitally by default. This tool helps you
+        do it physically.
       </p>
 
       <h2>What You’re Learning</h2>
       <p>
-       You’re learning how to tune a real-world camera to behave like a CG one — rotating around its nodal point instead of the body, and eliminating unwanted parallax. This simple shift preserves consistent perspective, essential for:
-	•	Practical compositing
-	•	Multiplane shooting
-	•	Stereo photography
-	•	Integration with CG and VFX
-
-Historically, stop-motion avoided these issues by locking the camera in place — a limitation that became part of the art. But modern workflows demand flexibility.
-
-This tool helps you move beyond the locked-off era — without abandoning what made it work.
-
-You’re not breaking tradition. You’re extending it — with precision.
+        You’re calibrating your camera like a CG artist: rotating around the nodal point, eliminating parallax, and
+        preserving true perspective. This is essential for practical compositing, stereo photography, and any situation
+        where real-world optics must match virtual ones.
       </p>
 
       <h2>Tips & Tricks</h2>
       <ul>
         <li><strong>Use "Send to Home" to reset, and "Send to Nodal Zero" to calibrate.</strong></li>
-        <li><strong>Train your eye:</strong> Slight shifts in the yellow background cylinder indicate misalignment. Perfect stillness signals success.</li>
+        <li>
+          <strong>Train your eye:</strong> Slight shifts in the yellow background cylinder indicate misalignment.
+          Perfect stillness signals success.
+        </li>
       </ul>
 
-      <div style="margin-top: 2em; text-align: center;">
-        <button id="launchBtn" style="font-size: 1.1em; padding: 0.75em 1.5em; background: #4caf50; color: white; border: none; border-radius: 5px; cursor: pointer;">
-          ✅ Close this Window
+      <div style="margin-top: 2em; text-align: center">
+        <button
+          id="launchBtn"
+          style="
+            font-size: 1.1em;
+            padding: 0.75em 1.5em;
+            background: #4caf50;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+          ">
+          ✅ Launch Calibration Tool
         </button>
       </div>
     </section>
-
 
     <a-scene reflection="directionalLight:a-light#dirlight">
       <a-assets>
@@ -215,7 +253,7 @@ You’re not breaking tradition. You’re extending it — with precision.
                 <label
                   for="zSlider"
                   style="position: absolute; top: 60px; left: 20px; z-index: 10; font-family: sans-serif">
-                  Z Offset: <span id="zValue">0</span> units (mm)
+                  Z Offset: <span id="zValue">0</span> mm
                 </label>
                 <input
                   class="ui-control"
@@ -234,11 +272,11 @@ You’re not breaking tradition. You’re extending it — with precision.
                   Switch to Witness Camera
                 </button>
                 <button id="homeBtn" class="ui-control" style="position: absolute; top: 180px; left: 20px; z-index: 10">
-                  Send to Standard Tripod Position
+                  Send to Standard Position
                 </button>
 
                 <button id="zeroBtn" class="ui-control" style="position: absolute; top: 220px; left: 20px; z-index: 10">
-                  Send to Nodal Zero Calibration
+                  Send to Nodal Zero (Calibrated)
                 </button>
               </div>
             </a-camera>
@@ -283,7 +321,7 @@ You’re not breaking tradition. You’re extending it — with precision.
         <strong>Nodal Zero Viewer</strong> is an educational tool by
         <a href="https://limnmedia.com" target="_blank">LIMNMEDIA</a>
         <br />
-        Visualize parallax and camera Z-offset — seeing is understanding.
+        Visualize parallax and camera Z-offset — because seeing is understanding.
       </div>
     </a-scene>
   </body>
